@@ -1,6 +1,6 @@
 # WebPiano 🎹
 
-<img src="piano.png" alt="piano" width="500"/>
+**Demo :** https://pianocsswasm.netlify.app/
 
 **_Full CSS piano with web assembly synthesizer_**
 
