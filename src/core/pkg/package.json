@@ -1,0 +1,13 @@
+{
+  "name": "core",
+  "collaborators": [
+    "netoun <coulonnier.nicolas.44@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "core_bg.wasm",
+    "core.js"
+  ],
+  "module": "core.js",
+  "sideEffects": false
+}
