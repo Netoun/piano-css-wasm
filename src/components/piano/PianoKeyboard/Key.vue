@@ -1,53 +1,88 @@
 <template>
-  <div class="keys_wrappers">
+  <div
+    :class="[
+      'key',
+      `key--${keyNote.color}`,
+      keyNote.isActive ? `key--active` : null,
+    ]"
+  >
     <div
-      v-for="key in keys.slice().reverse()"
-      :key="key.note + key.tonalite"
-      :class="['key', `key--${key.color}`, key.isActive ? `key--active` : null]"
+      :class="[
+        `key__face_${keyNote.color}`,
+        `key__face_${keyNote.color}--front`,
+      ]"
+    />
+    <div
+      :class="[
+        `key__face_${keyNote.color}`,
+        `key__face_${keyNote.color}--back`,
+      ]"
+    />
+    <div
+      :class="[
+        `key__face_${keyNote.color}`,
+        `key__face_${keyNote.color}--right`,
+      ]"
+    />
+    <div
+      :class="[
+        `key__face_${keyNote.color}`,
+        `key__face_${keyNote.color}--left`,
+      ]"
+    />
+    <div
+      :class="[`key__face_${keyNote.color}`, `key__face_${keyNote.color}--top`]"
     >
-      <div
-        :class="[`key__face_${key.color}`, `key__face_${key.color}--front`]"
-      />
-      <div
-        :class="[`key__face_${key.color}`, `key__face_${key.color}--back`]"
-      />
-      <div
-        :class="[`key__face_${key.color}`, `key__face_${key.color}--right`]"
-      />
-      <div
-        :class="[`key__face_${key.color}`, `key__face_${key.color}--left`]"
-      />
-      <div :class="[`key__face_${key.color}`, `key__face_${key.color}--top`]">
-        <p>{{ key.note }}</p>
-      </div>
-      <div
-        :class="[`key__face_${key.color}`, `key__face_${key.color}--bottom`]"
-      />
+      <p>{{ keyNote.note }}</p>
     </div>
+    <div
+      :class="[
+        `key__face_${keyNote.color}`,
+        `key__face_${keyNote.color}--bottom`,
+      ]"
+    />
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    keys: {
+    keyNote: {
       type: Object,
       required: true,
+    },
+    synth: {
+      type: Function,
+      required: true,
+    },
+  },
+  data() {
+    _synth: null
+  },
+  async created() {
+    const _synth = new this.synth()
+    this._synth = _synth
+    _synth.set_note(this.keyNote.code)
+    _synth.set_fm_frequency(0)
+    _synth.set_fm_amount(0)
+    _synth.set_gain(0)
+  },
+
+  watch: {
+    keyNote(value) {
+      console.log(value)
+      const _synth = this._synth
+      if (value.isActive) {
+        _synth.set_gain(0.8)
+      } else {
+        _synth.set_gain(0)
+      }
     },
   },
 }
 </script>
 
 <style lang="scss">
-.keys_wrappers {
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: nowrap;
-  height: inherit;
-  transform: rotateY(180deg) translateZ(-8px);
-}
 .key {
   pointer-events: auto;
   & > * {
@@ -151,8 +186,9 @@ export default {
 
     &--front {
       width: 20px;
+      background: rgb(13, 13, 13);
       height: 30px;
-      transform: rotateX(-90deg) translateZ(80px) translateX(-10px)
+      transform: rotateX(-90deg) translateZ(85px) translateX(-10px)
         translateY(10px);
     }
     &--right {
@@ -162,27 +198,24 @@ export default {
           rgb(55, 55, 55)
         ),
         radial-gradient(ellipse at bottom, rgb(44, 44, 44), rgb(55, 55, 55));
-      height: 90px;
+      height: 100px;
       width: 30px;
-      transform: rotateY(90deg) translateZ(-5px) translateX(10px)
-        translateY(5px);
+      transform: rotateY(90deg) translateZ(-5px) translateX(10px);
     }
     &--back {
       transform: rotateY(180deg) translateZ(75px);
     }
     &--left {
       background: rgb(10, 10, 10);
-      height: 90px;
+      height: 100px;
       width: 30px;
-      transform: rotateY(90deg) translateZ(-25px) translateX(10px)
-        translateY(5px);
+      transform: rotateY(90deg) translateZ(-25px) translateX(10px);
     }
     &--top {
       background: rgb(34, 33, 33);
       width: 20px;
-      height: 90px;
-      transform: rotateY(0deg) translateZ(-25px) translateX(-10px)
-        translateY(5px);
+      height: 100px;
+      transform: rotateY(0deg) translateZ(-25px) translateX(-10px);
     }
   }
 
@@ -254,8 +287,9 @@ export default {
 
       &--front {
         width: 20px;
+        background: rgb(10, 10, 10);
         height: 30px;
-        transform: rotateX(-90deg) translateZ(80px) translateX(-10px);
+        transform: rotateX(-90deg) translateZ(85px) translateX(-10px);
       }
       &--right {
         background: radial-gradient(
@@ -264,27 +298,24 @@ export default {
             rgb(55, 55, 55)
           ),
           radial-gradient(ellipse at bottom, rgb(44, 44, 44), rgb(55, 55, 55));
-        height: 90px;
+        height: 100px;
         width: 30px;
-        transform: rotateY(90deg) translateZ(-5px) translateX(0) translateY(5px);
+        transform: rotateY(90deg) translateZ(-5px) translateX(0);
       }
       &--back {
         transform: rotateY(180deg) translateZ(75px);
       }
       &--left {
         background: rgb(10, 10, 10);
-        height: 90px;
+        height: 100px;
         width: 30px;
-
-        transform: rotateY(90deg) translateZ(-25px) translateX(0)
-          translateY(5px);
+        transform: rotateY(90deg) translateZ(-25px);
       }
       &--top {
         background: rgb(34, 33, 33);
         width: 20px;
-        height: 90px;
-        transform: rotateY(0deg) translateZ(-15px) translateX(-10px)
-          translateY(5px);
+        height: 100px;
+        transform: rotateY(0deg) translateZ(-15px) translateX(-10px);
       }
     }
   }

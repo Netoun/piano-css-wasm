@@ -5,7 +5,7 @@
       :style="`transform: rotateY(${axis.y}deg) rotateX(${axis.x}deg) rotateZ(${axis.z}deg) translateZ(-150px);`"
     >
       <BoxFront />
-      <PianoKeyboard :keys="keys" />
+      <PianoKeyboard :keys="keys" :synth="synth" />
     </div>
   </div>
 </template>
@@ -26,6 +26,10 @@ export default {
   props: {
     axis: {
       type: Object,
+      required: true,
+    },
+    synth: {
+      type: Function,
       required: true,
     },
   },

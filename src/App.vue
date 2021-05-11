@@ -3,8 +3,11 @@
     <div class="ranges">
       <Slider v-for="a in Object.keys(axis)" v-model="axis[a]" />
     </div>
-    <div>
-      <Piano :axis="axis" />
+    <div v-if="synth">
+      <Piano :axis="axis" :synth="synth" />
+    </div>
+    <div v-else>
+      <button class="button" @click="start">Start</button>
     </div>
   </div>
 </template>
@@ -19,12 +22,20 @@ export default {
   },
   data() {
     return {
+      synth: null,
       axis: {
         x: 65,
         y: -15,
         z: 30,
       },
     }
+  },
+  methods: {
+    async start() {
+      const wasm = await import('./core/pkg')
+      await wasm.default()
+      this.synth = wasm.FmOsc
+    },
   },
 }
 </script>
@@ -40,6 +51,7 @@ export default {
   pointer-events: none;
   transform-style: preserve-3d;
 }
+
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -50,9 +62,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  background: #393e46;
 }
 .container {
-  margin: 1rem auto;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -60,32 +72,41 @@ html {
   text-align: center;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-
 .ranges {
   display: flex;
+  margin: 1rem auto;
   padding: 0.75rem;
-  background: rgb(41, 41, 41);
+  background: #222831;
   border-radius: 2rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  pointer-events: auto;
+  color: white;
+  font-weight: bold;
+  height: 80px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #33383f, #3d424b);
+  box-shadow: 7px 7px 15px #2d3137, -7px -7px 15px #3f444d;
+  transition-duration: 0.4s;
+  transition-property: box-shadow;
+  width: 120px;
+  &:hover {
+    border-radius: 10px;
+    background: linear-gradient(145deg, #3d424b, #33383f);
+    box-shadow: 7px 7px 15px #2d3137, -7px -7px 15px #3f444d;
+  }
+  &:active {
+    border-radius: 10px;
+    color: rgb(245, 245, 245);
+    background: #393e46;
+    box-shadow: inset 7px 7px 15px #2d3137, inset -7px -7px 15px #454b55;
+  }
 }
 </style>

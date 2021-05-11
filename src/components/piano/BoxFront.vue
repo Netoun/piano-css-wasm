@@ -16,13 +16,12 @@
 
   &--front {
     width: 800px;
-    background: rgb(15, 15, 15);
     height: 50px;
     transform: rotateX(-90deg) translateZ(-25px) translateY(-25px);
   }
   &--right {
     width: 80px;
-    background: rgb(25, 25, 25);
+    background: rgb(23, 23, 23);
     height: 75px;
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 36% 100%);
     transform: rotateY(90deg) translateZ(760px) translateY(-74px)
@@ -31,8 +30,8 @@
   &--back {
     width: 800px;
     background: rgb(15, 15, 15);
-    height: 75px;
-    transform: rotateX(-90deg) translateZ(-112px) translateY(-40px);
+    height: 80px;
+    transform: rotateX(-90deg) translateZ(-114px) translateY(-40px);
   }
   &--left {
     width: 80px;
@@ -46,11 +45,16 @@
     width: 800px;
     height: 82px;
     transform: rotateX(339deg) translateZ(33px) translateY(-95px);
+    background: rgb(25, 25, 25);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  // &--bottom {
-  // }
+  &--bottom {
+    width: 800px;
+    height: 80px;
+    background: rgb(10, 10, 10);
+    transform: translateY(-75px);
+  }
 }
 </style>

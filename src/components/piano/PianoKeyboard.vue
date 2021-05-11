@@ -5,28 +5,49 @@
     <div class="piano__face piano__face--right"></div>
     <div class="piano__face piano__face--left"></div>
     <div class="piano__face piano__face--top">
-      <Keys :keys="keys" />
+      <div class="keys_wrappers">
+        <div v-for="keyNote in keys.slice().reverse()">
+          <Key :keyNote="keyNote" :synth="synth" />
+        </div>
+      </div>
     </div>
     <div class="piano__face piano__face--bottom"></div>
   </div>
 </template>
 
 <script>
-import Keys from './PianoKeyboard/Keys.vue'
+import Key from './PianoKeyboard/Key.vue'
 export default {
   components: {
-    Keys,
+    Key,
   },
   props: {
     keys: {
       type: Object,
       required: true,
     },
+    synth: {
+      type: Function,
+      required: true,
+    },
+  },
+  created() {
+    console.log(this.keys.slice().reverse())
   },
 }
 </script>
 
 <style lang="scss">
+.keys_wrappers {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  height: inherit;
+  transform: rotateY(180deg) translateZ(-8px);
+}
+
 .piano__face {
   position: absolute;
   background: rgb(10, 10, 10);
@@ -102,21 +123,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(
-        217deg,
-        rgba(27, 27, 27, 0.8),
-        rgba(30, 30, 30, 0.755) 70.71%
-      ),
-      linear-gradient(
-        127deg,
-        rgba(29, 29, 29, 0.8),
-        rgba(39, 40, 39, 0.455) 70.71%
-      ),
-      linear-gradient(
-        336deg,
-        rgba(32, 32, 35, 0.8),
-        rgba(0, 0, 0, 0.823) 70.71%
-      );
+    background: rgb(30, 30, 30);
   }
 
   &--bottom {
@@ -126,21 +133,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(
-        217deg,
-        rgba(17, 17, 17, 0.8),
-        rgba(20, 20, 20, 0.755) 70.71%
-      ),
-      linear-gradient(
-        127deg,
-        rgba(19, 19, 19, 0.8),
-        rgba(29, 30, 29, 0.455) 70.71%
-      ),
-      linear-gradient(
-        336deg,
-        rgba(22, 22, 25, 0.8),
-        rgba(0, 0, 0, 0.823) 70.71%
-      );
   }
 }
 </style>

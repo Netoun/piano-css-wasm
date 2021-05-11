@@ -50,7 +50,7 @@ input[type='range'] {
     width: 1rem;
     border-radius: 1rem;
     border: none;
-    background: rgb(255, 255, 255);
+    background: #00fff5;
     cursor: pointer;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.75),
       0 2px 4px -1px rgba(0, 0, 0, 0.25);
@@ -62,7 +62,7 @@ input[type='range'] {
     height: 1rem;
     width: 1rem;
     border-radius: 1rem;
-    background: rgb(255, 255, 255);
+    background: #00fff5;
     cursor: pointer;
   }
 
@@ -73,7 +73,7 @@ input[type='range'] {
     width: 1rem;
     border: none;
     border-radius: 1rem;
-    background: rgb(255, 255, 255);
+    background: #00fff5;
     cursor: pointer;
   }
 }
