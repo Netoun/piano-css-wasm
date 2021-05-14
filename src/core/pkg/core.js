@@ -159,7 +159,6 @@ async function load(module, imports) {
 }
 
 async function init(input) {
-  console.log(input)
   if (typeof input === 'undefined') {
     input = new URL('core_bg.wasm', import.meta.url)
   }

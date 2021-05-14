@@ -1,14 +1,18 @@
 <template>
   <div class="container">
-    <div class="ranges">
-      <Slider v-for="a in Object.keys(axis)" v-model="axis[a]" />
-    </div>
-    <div v-if="synth">
-      <Piano :axis="axis" :synth="synth" />
-    </div>
-    <div v-else>
-      <button class="button" @click="start">Start</button>
-    </div>
+    <template v-if="synth">
+      <div class="ranges">
+        <Slider v-for="a in Object.keys(axis)" :key="a" v-model="axis[a]" />
+      </div>
+      <div>
+        <Piano :axis="axis" :synth="synth" />
+      </div>
+    </template>
+    <template v-else>
+      <div class="start">
+        <button class="button" @click="start">Start</button>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -108,5 +112,10 @@ html {
     background: #393e46;
     box-shadow: inset 7px 7px 15px #2d3137, inset -7px -7px 15px #454b55;
   }
+}
+
+.start {
+  height: inherit;
+  margin: auto;
 }
 </style>
